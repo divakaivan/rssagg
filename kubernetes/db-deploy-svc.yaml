@@ -23,14 +23,25 @@ spec:
             value: postgres
           - name: POSTGRES_USER
             value: postgres
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
         volumeMounts:
           - mountPath: /var/lib/postgresql/data
             name: db-data
-      restartPolicy: Always
+        securityContext:
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 1000
       volumes:
         - name: db-data
           persistentVolumeClaim:
             claimName: db-data
+      restartPolicy: Always
 ---
 apiVersion: v1
 kind: Service

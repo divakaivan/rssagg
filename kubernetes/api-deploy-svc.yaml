@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: api
-        image: timee98642/rss-agg-api:latest
+        image: timee98642/rss-agg-api:sha256-5aab953f73f28b77607abbbfe000103d5c4c8154605bcac194be252ed5532ce2
         ports:
         - containerPort: 8080
           protocol: TCP
@@ -22,6 +22,17 @@ spec:
           value: "8080"
         - name: DB_URL
           value: postgres://postgres:postgres@db:5432/rssagg?sslmode=disable
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+        securityContext:
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 1000
       restartPolicy: Always
 ---
 apiVersion: v1
