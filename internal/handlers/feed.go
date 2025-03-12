@@ -11,6 +11,18 @@ import (
 	"github.com/google/uuid"
 )
 
+// HandlerCreateFeed godoc
+// @Summary Create a new feed
+// @Description Create a new feed. Requires authentication.
+// @Tags feeds
+// @Accept json
+// @Param name body string true "Name of the feed"
+// @Param url body string true "URL of the feed"
+// @Produce json
+// @Security ApiKeyAuth
+// @Success 201 "Feed"
+// @Failure 400 "ErrorResponse"
+// @Router /feeds [post]
 func (apiCfg *API) HandlerCreateFeed(w http.ResponseWriter, r *http.Request, user database.User) {
 	type parameters struct {
 		Name string `json:"name"`
@@ -40,6 +52,16 @@ func (apiCfg *API) HandlerCreateFeed(w http.ResponseWriter, r *http.Request, use
 	utils.RespondWithJSON(w, 201, utils.DatabaseFeedToFeed(feed))
 }
 
+// HandlerGetFeeds godoc
+// @Summary Get all feeds
+// @Description Get all feeds
+// @Tags feeds
+// @Accept json
+// @Produce json
+// @Security ApiKeyAuth
+// @Success 200 "[]Feed"
+// @Failure 400 "ErrorResponse"
+// @Router /feeds [get]
 func (apiCfg *API) HandlerGetFeeds(w http.ResponseWriter, r *http.Request) {
 
 	feeds, err := apiCfg.DB.GetFeeds(r.Context())

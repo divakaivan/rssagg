@@ -30,7 +30,7 @@ import (
 //	@license.url	http://www.apache.org/licenses/LICENSE-2.0.html
 
 // @host		localhost
-// @BasePath	/v1
+// @BasePath	:8080/v1
 func main() {
 
 	env_err := godotenv.Load(".env")
