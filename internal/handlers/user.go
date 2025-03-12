@@ -44,7 +44,7 @@ func (apiCfg *API) HandlerGetUser(w http.ResponseWriter, r *http.Request, user d
 
 func (apiCfg *API) HandlerGetPostsForUser(w http.ResponseWriter, r *http.Request, user database.User) {
 
-	if r.URL.Query().Get("limit") != "" || r.URL.Query().Get("offset") != "" {
+	if r.URL.Query().Get("limit") != "" && r.URL.Query().Get("offset") != "" {
 		apiCfg.HandlerGetPostsForUserWithPagination(w, r, user)
 		return
 	}

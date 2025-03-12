@@ -69,8 +69,8 @@ func (q *Queries) CreatePost(ctx context.Context, arg CreatePostParams) (Post, e
 
 const getPostsForUser = `-- name: GetPostsForUser :many
 select posts.id, posts.created_at, posts.updated_at, posts.title, posts.summary, posts.content, posts.url, posts.published_at, posts.feed_id from posts
-join feed_follows on feed_follows.feed_id = posts.feed_id
-where feed_follows.user_id = $1
+join feeds on feeds.id = posts.feed_id
+where feeds.user_id = $1
 order by posts.published_at desc
 limit $2
 `
