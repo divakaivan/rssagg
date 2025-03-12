@@ -1,0 +1,38 @@
+# API Deployment and Service
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+spec:
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+      - name: api
+        image: timee98642/rss-agg-api:latest
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        env:
+        - name: PORT
+          value: "8080"
+        - name: DB_URL
+          value: postgres://postgres:postgres@db:5432/rssagg?sslmode=disable
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-service
+spec:
+  selector:
+    app: api
+  ports:
+  - port: 80
+    targetPort: 8080
+  type: LoadBalancer
