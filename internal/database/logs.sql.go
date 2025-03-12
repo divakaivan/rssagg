@@ -16,16 +16,18 @@ const createLog = `-- name: CreateLog :exec
 insert into logs (
     timestamp,
     caller_user_id,
+    remote_addr,
     method,
     url,
     status,
     duration_ms
-) values ($1, $2, $3, $4, $5, $6)
+) values ($1, $2, $3, $4, $5, $6, $7)
 `
 
 type CreateLogParams struct {
 	Timestamp    time.Time
 	CallerUserID uuid.UUID
+	RemoteAddr   string
 	Method       string
 	Url          string
 	Status       string
@@ -36,6 +38,7 @@ func (q *Queries) CreateLog(ctx context.Context, arg CreateLogParams) error {
 	_, err := q.db.ExecContext(ctx, createLog,
 		arg.Timestamp,
 		arg.CallerUserID,
+		arg.RemoteAddr,
 		arg.Method,
 		arg.Url,
 		arg.Status,

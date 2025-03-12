@@ -1,14 +1,14 @@
 package handlers
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 	"time"
 
 	"github.com/divakaivan/rssagg/internal/auth"
 	"github.com/divakaivan/rssagg/internal/database"
-	"github.com/divakaivan/rssagg/internal/utils"
+	"github.com/google/uuid"
 )
 
 type responseWriterWrapper struct {
@@ -36,22 +36,25 @@ func (api *API) LogToDbMiddleware(next http.Handler) http.Handler {
 
 		apiKey, err := auth.GetAPIKey(r.Header)
 		if err != nil {
-			utils.RespondWithError(w, 403, fmt.Sprintf("Auth error: %v", err))
-			return
+			apiKey = ""
 		}
 		user, err := api.DB.GetUserByAPIKey(r.Context(), apiKey)
 		if err != nil {
-			utils.RespondWithError(w, 400, fmt.Sprintf("Could not get user: %v", err))
-			return
+			// requires the creation of a default user in the db
+			emptyUserID, _ := uuid.Parse("00000000-0000-0000-0000-000000000000")
+			user.ID = emptyUserID
 		}
-
-		api.DB.CreateLog(r.Context(), database.CreateLogParams{
+		err = api.DB.CreateLog(r.Context(), database.CreateLogParams{
 			Timestamp:    time.Now(),
 			CallerUserID: user.ID,
+			RemoteAddr:   r.RemoteAddr,
 			Method:       r.Method,
 			Url:          r.URL.Path,
 			Status:       strconv.Itoa(wrappedWriter.statusCode),
 			DurationMs:   duration.Milliseconds(),
 		})
+		if err != nil {
+			log.Print("[Error] Cannot log request", err)
+		}
 	})
 }

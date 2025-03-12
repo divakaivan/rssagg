@@ -33,6 +33,7 @@ type Log struct {
 	ID           int32
 	Timestamp    time.Time
 	CallerUserID uuid.UUID
+	RemoteAddr   string
 	Method       string
 	Url          string
 	Status       string
