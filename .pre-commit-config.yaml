@@ -3,3 +3,4 @@ repos:
   rev: 0.6.0
   hooks:
   - id: kube-linter
+    args: ["lint", "kubernetes"]
