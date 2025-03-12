@@ -1,10 +1,10 @@
 name: Publish API Docker image
 
 on:
-  workflow_run:
-    workflows: [ "Run Unit Tests" ]
-    types:
-      - completed
+  push:
+    branches: [ "main" ]
+
+  workflow_dispatch:  
 
 jobs:
   push_to_registry:
@@ -16,10 +16,6 @@ jobs:
       attestations: write
       id-token: write
     steps:
-      - name: Exit if not on master branch
-        if: github.ref != 'refs/heads/main'
-        run: exit 1
-
       - name: Check out the repo
         uses: actions/checkout@v4
 
