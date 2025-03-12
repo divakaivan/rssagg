@@ -1,0 +1,6 @@
+- id: kube-linter
+  name: KubeLinter
+  description: This hook installs (using Go) and runs the KubeLinter utility to lint Helm charts and Kubernetes YAML files.
+  entry: kube-linter lint 
+  language: golang
+  types: [yaml]
