@@ -13,10 +13,24 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/cors"
 	"github.com/joho/godotenv"
+	httpSwagger "github.com/swaggo/http-swagger/v2"
 
+	_ "github.com/divakaivan/rssagg/docs"
 	_ "github.com/lib/pq"
 )
 
+//	@title			RSS Aggregator API
+//	@version		1.0
+//	@description This is a sample server for RSS Aggregator.
+
+//	@contact.name	Ivan
+//	@contact.url	https://github.com/divakaivan
+
+//	@license.name	Apache 2.0
+//	@license.url	http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host		localhost
+// @BasePath	:8080/v1
 func main() {
 
 	env_err := godotenv.Load(".env")
@@ -74,7 +88,9 @@ func main() {
 	v1Router.Delete("/feed_follows/{feedFollowID}", api.AuthMiddleware(api.HandlerDeleteFeedFollow))
 
 	router.Mount("/v1", v1Router)
-
+	router.Get("/swagger/*", httpSwagger.Handler(
+		httpSwagger.URL("http://localhost:8080/swagger/doc.json"), //The url pointing to API definition
+	))
 	srv := &http.Server{
 		Handler: router,
 		Addr:    ":" + portString,

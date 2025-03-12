@@ -12,6 +12,16 @@ import (
 	"github.com/google/uuid"
 )
 
+// HandlerCreateUser godoc
+// @Summary Create a new user
+// @Description Create a new user
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param name body string true "Name of the user"
+// @Success 201 {object} database.User
+// @Failure 400 "{object}" "error"
+// @Router /users [post]
 func (apiCfg *API) HandlerCreateUser(w http.ResponseWriter, r *http.Request) {
 	type parameters struct {
 		Name string `json:"name"`
@@ -38,10 +48,31 @@ func (apiCfg *API) HandlerCreateUser(w http.ResponseWriter, r *http.Request) {
 	utils.RespondWithJSON(w, 201, utils.DatabaseUserToUser(user))
 }
 
+// HandlerGetUser godoc
+// @Summary Get a user by ID
+// @Description Get a user by ID. Requires authentication.
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param id path string true "ID of the user"
+// @Success 200 {object} database.User
+// @Failure 404 "{object}" "error"
+// @Router /users/{id} [get]
 func (apiCfg *API) HandlerGetUser(w http.ResponseWriter, r *http.Request, user database.User) {
 	utils.RespondWithJSON(w, 200, utils.DatabaseUserToUser(user))
 }
 
+// HandlerGetPostsForUser godoc
+// @Summary Get posts for a user
+// @Description Get posts for a user
+// @Tags posts
+// @Accept json
+// @Produce json
+// @Param limit query int false "Limit of posts to return"
+// @Param offset query int false "Offset of posts to return"
+// @Success 200 {array} database.Post
+// @Failure 500 "{object}" "error"
+// @Router /posts [get]
 func (apiCfg *API) HandlerGetPostsForUser(w http.ResponseWriter, r *http.Request, user database.User) {
 
 	if r.URL.Query().Get("limit") != "" && r.URL.Query().Get("offset") != "" {
@@ -60,6 +91,17 @@ func (apiCfg *API) HandlerGetPostsForUser(w http.ResponseWriter, r *http.Request
 	utils.RespondWithJSON(w, 200, utils.DatabasePostsToPosts(posts))
 }
 
+// HandlerGetPostsForUserWithPagination godoc
+// @Summary Get posts for a user with pagination
+// @Description Get posts for a user with pagination
+// @Tags posts
+// @Accept json
+// @Produce json
+// @Param limit query int false "Limit of posts to return"
+// @Param offset query int false "Offset of posts to return"
+// @Success 200 {array} database.Post
+// @Failure 500 "{object}" "error"
+// @Router /posts [get]
 func (apiCfg *API) HandlerGetPostsForUserWithPagination(w http.ResponseWriter, r *http.Request, user database.User) {
 	limitStr := r.URL.Query().Get("limit")
 	offsetStr := r.URL.Query().Get("offset")
