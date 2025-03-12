@@ -1,6 +1,6 @@
 services:
   api:
-    build: .
+    image: timee98642/rss-agg-ap:latest
     ports:
       - "8080:8080"
     environment:
