@@ -2,3 +2,5 @@ rssagg
 .DS_Store
 .env
 thunder-tests/
+vendor/*
+modules.txt
