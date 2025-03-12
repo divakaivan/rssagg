@@ -29,6 +29,16 @@ type FeedFollow struct {
 	FeedID    uuid.UUID
 }
 
+type Log struct {
+	ID           int32
+	Timestamp    time.Time
+	CallerUserID uuid.UUID
+	Method       string
+	Url          string
+	Status       string
+	DurationMs   int64
+}
+
 type Post struct {
 	ID          uuid.UUID
 	CreatedAt   time.Time
