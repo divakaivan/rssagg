@@ -1,12 +1,11 @@
-name: Run unit tests
+name: Run Unit Tests
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "work" ]
 
 jobs:
   test:
-    name: Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

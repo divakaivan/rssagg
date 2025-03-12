@@ -1,10 +1,10 @@
 name: Publish API Docker image
 
 on:
-  workflow_run:
-    workflows: [Run unit tests]
-    types:
-      - completed
+  push:
+    branches: [ "main" ]
+
+  workflow_dispatch:  
 
 jobs:
   push_to_registry:
