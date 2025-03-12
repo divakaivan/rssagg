@@ -2,7 +2,7 @@ name: Publish API Docker image
 
 on:
   workflow_run:
-    workflows: [Run unit tests]
+    workflows: [ "Run Linting & Unit Tests", "Go Lint" ]
     types:
       - completed
 

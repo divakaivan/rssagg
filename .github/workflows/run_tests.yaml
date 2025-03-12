@@ -1,10 +1,30 @@
-name: Run unit tests
+name: Run Linting & Unit Tests
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "work" ]
 
 jobs:
+  ling-go:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: v1.64
+
+  lint-yaml:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: yaml-lint
+        uses: ibiqlik/action-yamllint@v3
+
   test:
     name: Test
     runs-on: ubuntu-latest
