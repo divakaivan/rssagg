@@ -56,7 +56,7 @@ func main() {
 	router.Use(api.LogToDbMiddleware)
 
 	v1Router := chi.NewRouter()
-	v1Router.Get("/healthz", api.HandlerCreateUser)
+	v1Router.Get("/healthz", handlers.HandlerReadiness)
 	v1Router.Get("/err", handlers.HandlerErr)
 	v1Router.Post("/users", api.HandlerCreateUser)
 	v1Router.Get("/users", api.AuthMiddleware(api.HandlerGetUser))
