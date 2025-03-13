@@ -13,6 +13,9 @@ spec:
     - podSelector:
         matchLabels:
           app: api
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: grafana
     ports:
     - protocol: TCP
       port: 5432
