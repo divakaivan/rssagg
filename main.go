@@ -32,11 +32,6 @@ import (
 // @BasePath	:8080/v1
 func main() {
 
-	// env_err := godotenv.Load(".env")
-	// if env_err != nil {
-	// 	log.Fatal("[Error] Cannot load .env file: ", env_err)
-	// }
-
 	portString := os.Getenv("PORT")
 	if portString == "" {
 		log.Fatal("[Error] PORT not found in env")
