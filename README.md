@@ -6,8 +6,12 @@
 
 Tech: Go, PostgreSQL, GitHub Actions, Docker, Kubernetes, Prometheus, Grafana
 
-Below I go in more detail about each section.
-
+- [RSS Aggregator API](#rss-aggregator-api)
+- [API](#api)
+- [CI/CD](#cicd)
+- [Kubernetes](#kubernetes)
+- [Setup](#setup)
+- [Future](#future)
 ## API 
 
 ![api-docs](project-info/api.svg)
