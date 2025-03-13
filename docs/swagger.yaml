@@ -39,7 +39,7 @@ info:
   contact:
     name: Ivan
     url: https://github.com/divakaivan
-  description: This is a sample server for RSS Aggregator.
+  description: This is a basic server for RSS Aggregation.
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -64,9 +64,9 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{object}" "[]FeedFollow'
+          description: '[]database.FeedFollow'
         "400":
-          description: '{object}" "ErrorResponse'
+          description: ErrorResponse
       security:
       - ApiKeyAuth: []
       summary: Get all feed follows
@@ -87,9 +87,9 @@ paths:
       - application/json
       responses:
         "201":
-          description: '{object}" "FeedFollow'
+          description: FeedFollow
         "400":
-          description: '{object}" "ErrorResponse'
+          description: ErrorResponse
       security:
       - ApiKeyAuth: []
       summary: Create a new feed follow
@@ -110,9 +110,9 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{object}" "struct{}'
+          description: struct{}
         "400":
-          description: '{object}" "ErrorResponse'
+          description: ErrorResponse
       security:
       - ApiKeyAuth: []
       summary: Delete a feed follow
@@ -240,11 +240,9 @@ paths:
       - application/json
       responses:
         "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/database.User'
+          description: User
         "404":
-          description: '{object}" "error'
+          description: error
       summary: Get a user by ID
       tags:
       - users

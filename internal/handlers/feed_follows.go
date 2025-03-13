@@ -20,8 +20,8 @@ import (
 // @Produce json
 // @Security ApiKeyAuth
 // @Param feed_id body string true "Feed ID"
-// @Success 201 "{object}" "FeedFollow"
-// @Failure 400 "{object}" "ErrorResponse"
+// @Success 201 "FeedFollow"
+// @Failure 400 "ErrorResponse"
 // @Router /feed_follows [post]
 func (apiCfg *API) HandlerCreateFeedFollow(w http.ResponseWriter, r *http.Request, user database.User) {
 	type parameters struct {
@@ -57,8 +57,8 @@ func (apiCfg *API) HandlerCreateFeedFollow(w http.ResponseWriter, r *http.Reques
 // @Accept json
 // @Produce json
 // @Security ApiKeyAuth
-// @Success 200 "{object}" "[]FeedFollow"
-// @Failure 400 "{object}" "ErrorResponse"
+// @Success 200 "[]database.FeedFollow"
+// @Failure 400 "ErrorResponse"
 // @Router /feed_follows [get]
 func (apiCfg *API) HandlerGetFeedFollows(w http.ResponseWriter, r *http.Request, user database.User) {
 
@@ -79,8 +79,8 @@ func (apiCfg *API) HandlerGetFeedFollows(w http.ResponseWriter, r *http.Request,
 // @Produce json
 // @Security ApiKeyAuth
 // @Param feedFollowID path string true "Feed Follow ID"
-// @Success 200 "{object}" "struct{}"
-// @Failure 400 "{object}" "ErrorResponse"
+// @Success 200 "struct{}""
+// @Failure 400 "ErrorResponse"
 // @Router /feed_follows/{feedFollowID} [delete]
 func (apiCfg *API) HandlerDeleteFeedFollow(w http.ResponseWriter, r *http.Request, user database.User) {
 	feedFollowID, err := uuid.Parse(chi.URLParam(r, "feedFollowID"))

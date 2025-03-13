@@ -55,8 +55,8 @@ func (apiCfg *API) HandlerCreateUser(w http.ResponseWriter, r *http.Request) {
 // @Accept json
 // @Produce json
 // @Param id path string true "ID of the user"
-// @Success 200 {object} database.User
-// @Failure 404 "{object}" "error"
+// @Success 200 "User"
+// @Failure 404 "error"
 // @Router /users/{id} [get]
 func (apiCfg *API) HandlerGetUser(w http.ResponseWriter, r *http.Request, user database.User) {
 	utils.RespondWithJSON(w, 200, utils.DatabaseUserToUser(user))

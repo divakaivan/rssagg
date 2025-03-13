@@ -55,10 +55,10 @@ const docTemplate = `{
                 "summary": "Get all feed follows",
                 "responses": {
                     "200": {
-                        "description": "{object}\" \"[]FeedFollow"
+                        "description": "[]database.FeedFollow"
                     },
                     "400": {
-                        "description": "{object}\" \"ErrorResponse"
+                        "description": "ErrorResponse"
                     }
                 }
             },
@@ -92,10 +92,10 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "201": {
-                        "description": "{object}\" \"FeedFollow"
+                        "description": "FeedFollow"
                     },
                     "400": {
-                        "description": "{object}\" \"ErrorResponse"
+                        "description": "ErrorResponse"
                     }
                 }
             }
@@ -129,10 +129,10 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "{object}\" \"struct{}"
+                        "description": "struct{}"
                     },
                     "400": {
-                        "description": "{object}\" \"ErrorResponse"
+                        "description": "ErrorResponse"
                     }
                 }
             }
@@ -328,13 +328,10 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/database.User"
-                        }
+                        "description": "User"
                     },
                     "404": {
-                        "description": "{object}\" \"error"
+                        "description": "error"
                     }
                 }
             }
@@ -403,7 +400,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         ":8080/v1",
 	Schemes:          []string{},
 	Title:            "RSS Aggregator API",
-	Description:      "This is a sample server for RSS Aggregator.",
+	Description:      "This is a basic server for RSS Aggregation.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
