@@ -4,7 +4,7 @@
 - The API is tested, dockerised and available on [Docker Hub](https://hub.docker.com/repository/docker/timee98642/rss-agg-api/general)
 - Then the API is used in a local Kubernetes application, ending with dashboards for monitoring Kubernetes and the API
 
-Tech: Go, PostgreSQL, GitHub Actions, Docker, Kubernetes, Prometheus, Grafana
+*Tech: Go, PostgreSQL, GitHub Actions, Docker, Kubernetes, Prometheus, Grafana*
 
 ### Table of Contents:
 
@@ -20,23 +20,23 @@ Tech: Go, PostgreSQL, GitHub Actions, Docker, Kubernetes, Prometheus, Grafana
 
 - There are 4 main Entities (User, Feed, Post, FeedFollows) alongside their schemas. Each is in its own table in PostgreSQL
 
-User queries on `/users`:
+**User queries on `/users`**
 - GET (auth): returns a User entity
 - POST: creates a User and returns a User
 
-Feed queries on `/feeds`:
+**Feed queries on `/feeds`**
 - GET: returns list of Feed entities
 - POST (auth): takes in a name and url to scrape its RSS feed and returns a Feed
 
-Post queries on `/posts`:
+**Post queries on `/posts`**
 - GET (auth): (optionally takes pagination params) returns a list of Post entities for the authenticated user
 
-FeedFollows queries on `/feed_follows`:
+**FeedFollows queries on `/feed_follows`**
 - GET (auth): returns followed feeds for the authenticated user
 - POST (auth): the authenticated User follows a Feed and returns a FeedFollow
 - DELETE (auth): the authenticated User unfollows a feed
 
-There are 2 middlewares:
+**There are 2 middlewares**
 - Authentication (on selected actions)
 - Logging request/reponses to the database for monitoring (on all)
 
@@ -52,19 +52,19 @@ The dockerised API is lint, tested, and pushed to [Docker Hub](https://hub.docke
 
 ![k8s-flow](project-info/k8s-flow.svg)
 
-1. API Traffic Flow
+**API Traffic Flow**
 - Users interact with the `api-service` (LoadBalancer), which forwards traffic to the `api pod`
 - The api pods handle the request and may need to query the database (`db`)
 
-2. Database Access with NetworkPolicy
+**Database Access with NetworkPolicy**
 - The `api pod` connects to the `db-service`, which routes traffic to `db pods`
 - The `db-access-policy` NetworkPolicy allows the `api pod` to access the `db`
 
-3. Storage for Database
+**Storage for Database**
 - The `db pod` uses Persistent Volume Claims (PVCs) to request storage
 - The storage is backed by a Persistent Volume (PV)
 
-4. Secrets
+**Secrets**
 - Database connection information is passed to both `api pod` and `db pod`
 
 ### Monitoring & Metrics
