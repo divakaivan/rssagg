@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is a sample server for RSS Aggregator.",
+        "description": "This is a basic server for RSS Aggregation.",
         "title": "RSS Aggregator API",
         "contact": {
             "name": "Ivan",
@@ -49,10 +49,10 @@
                 "summary": "Get all feed follows",
                 "responses": {
                     "200": {
-                        "description": "{object}\" \"[]FeedFollow"
+                        "description": "[]database.FeedFollow"
                     },
                     "400": {
-                        "description": "{object}\" \"ErrorResponse"
+                        "description": "ErrorResponse"
                     }
                 }
             },
@@ -86,10 +86,10 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "{object}\" \"FeedFollow"
+                        "description": "FeedFollow"
                     },
                     "400": {
-                        "description": "{object}\" \"ErrorResponse"
+                        "description": "ErrorResponse"
                     }
                 }
             }
@@ -123,10 +123,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "{object}\" \"struct{}"
+                        "description": "struct{}"
                     },
                     "400": {
-                        "description": "{object}\" \"ErrorResponse"
+                        "description": "ErrorResponse"
                     }
                 }
             }
@@ -322,13 +322,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/database.User"
-                        }
+                        "description": "User"
                     },
                     "404": {
-                        "description": "{object}\" \"error"
+                        "description": "error"
                     }
                 }
             }

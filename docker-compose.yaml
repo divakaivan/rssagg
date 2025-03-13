@@ -3,18 +3,17 @@ services:
     image: timee98642/rss-agg-api:latest
     ports:
       - "8080:8080"
+    env_file:
+      - .env
     environment:
-      - PORT=8080
-      - DB_URL=postgres://postgres:postgres@db:5432/rssagg?sslmode=disable
+      - DB_URL=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@db:5432/$POSTGRES_DB?sslmode=disable
     depends_on:
       - db
 
   db:
     image: postgres:15
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: rssagg
+    env_file:
+      - .env
     ports:
       - "5432:5432"
     volumes:
