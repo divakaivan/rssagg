@@ -1,3 +1,18 @@
+### RSS Aggregator API
+
+- This project develops an API that allows users to authenticate, scrape RSS feeds, follow feeds of their choice, and view posts from the feeds they follow
+- The API is tested, dockerised and available on [Docker Hub](https://hub.docker.com/repository/docker/timee98642/rss-agg-api/general)
+- Then the API is used in a local Kubernetes application, ending with dashboards for monitoring Kubernetes and the API
+
+Tech: Go, SQL, GitHub Actions, Docker, Kubernetes, Prometheus, Grafana
+
+Below I go in more detail about each section.
+
+### API 
+
+![api-docs](project-info/api.svg)
+
+
 
 
 ### Setup Kubernetes
