@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-echo "Waiting for the database to start... (sleep 30)"
+echo "Waiting for the database to start... (sleeping 30)"
 sleep 30
 
 echo "Running database migrations..."
