@@ -29,7 +29,7 @@ helm install my-grafana grafana-grafana
 
 # check pods/svc with kubectl are running...
 
-# get grafana pwd and save it for grafana login
+# get grafana pwd and save it for login
 kubectl get secret -n default my-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 
 # port-forward grafana to localhost
