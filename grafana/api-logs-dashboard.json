@@ -654,7 +654,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT \n    status, \n    COUNT(*) AS count\nFROM logs\nGROUP BY status\nORDER BY count DESC;\n",
+          "rawSql": "SELECT \n    status, \n    COUNT(*) * 100.0 / SUM(COUNT(*)) OVER () AS count\nFROM logs\nGROUP BY status\nORDER BY count DESC;\n",
           "refId": "A",
           "sql": {
             "columns": [
@@ -675,7 +675,7 @@
           }
         }
       ],
-      "title": "Response Status",
+      "title": "Response Status %",
       "type": "barchart"
     },
     {
@@ -696,9 +696,50 @@
             }
           },
           "fieldMinMax": false,
-          "mappings": []
+          "mappings": [
+            {
+              "options": {
+                "GET": {
+                  "color": "blue",
+                  "index": 0
+                }
+              },
+              "type": "value"
+            }
+          ]
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "GET"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "POST"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 7,
@@ -709,6 +750,7 @@
       "id": 2,
       "options": {
         "displayLabels": [
+          "value",
           "name"
         ],
         "legend": {
@@ -736,7 +778,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT \n    method AS \"label\", \n    COUNT(*) AS \"value\"\nFROM logs\nGROUP BY method\nORDER BY \"value\" DESC;\n",
+          "rawSql": "SELECT \n    method AS \"label\", \n    COUNT(method) * 100.0 / SUM(COUNT(method)) OVER () AS \"percentage\"\nFROM logs\nGROUP BY method\nORDER BY \"percentage\" DESC;\n",
           "refId": "A",
           "sql": {
             "columns": [
@@ -774,7 +816,7 @@
           "table": "logs"
         }
       ],
-      "title": "HTTP Methods ",
+      "title": "HTTP Methods %",
       "type": "piechart"
     },
     {
@@ -874,7 +916,7 @@
           "calcs": [],
           "displayMode": "table",
           "placement": "right",
-          "showLegend": true
+          "showLegend": false
         },
         "orientation": "horizontal",
         "showValue": "auto",
@@ -894,7 +936,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "with cte as (\n    SELECT \n    FLOOR(duration_ms / 10) * 10 AS duration_bucket, \n    COUNT(*) AS request_count,\n    CASE\n        WHEN FLOOR(duration_ms / 10) * 10 = 0 THEN '0-9ms'\n        WHEN FLOOR(duration_ms / 10) * 10 = 10 THEN '10-19ms'\n        WHEN FLOOR(duration_ms / 10) * 10 = 20 THEN '20-29ms'\n        WHEN FLOOR(duration_ms / 10) * 10 = 30 THEN '30-39ms'\n        WHEN FLOOR(duration_ms / 10) * 10 = 40 THEN '40-49ms'\n        WHEN FLOOR(duration_ms / 10) * 10 = 50 THEN '50-59ms'\n        WHEN FLOOR(duration_ms / 10) * 10 = 60 THEN '60-69ms'\n        WHEN FLOOR(duration_ms / 10) * 10 = 70 THEN '70-79ms'\n        WHEN FLOOR(duration_ms / 10) * 10 = 80 THEN '80-89ms'\n        WHEN FLOOR(duration_ms / 10) * 10 = 90 THEN '90-99ms'\n        WHEN FLOOR(duration_ms / 10) * 10 = 100 THEN '100ms'\n        ELSE 'Other' \n    END AS bucket_label\nFROM logs\nWHERE duration_ms <= 100\nGROUP BY duration_bucket\nORDER BY duration_bucket\n)\nselect request_count, bucket_label from cte;",
+          "rawSql": "WITH cte AS (\n    SELECT \n        FLOOR(duration_ms / 10) * 10 AS duration_bucket, \n        COUNT(*) AS request_count,\n        CASE\n            WHEN FLOOR(duration_ms / 10) * 10 = 0 THEN '0-9ms'\n            WHEN FLOOR(duration_ms / 10) * 10 = 10 THEN '10-19ms'\n            WHEN FLOOR(duration_ms / 10) * 10 = 20 THEN '20-29ms'\n            WHEN FLOOR(duration_ms / 10) * 10 = 30 THEN '30-39ms'\n            WHEN FLOOR(duration_ms / 10) * 10 = 40 THEN '40-49ms'\n            WHEN FLOOR(duration_ms / 10) * 10 = 50 THEN '50-59ms'\n            WHEN FLOOR(duration_ms / 10) * 10 = 60 THEN '60-69ms'\n            WHEN FLOOR(duration_ms / 10) * 10 = 70 THEN '70-79ms'\n            WHEN FLOOR(duration_ms / 10) * 10 = 80 THEN '80-89ms'\n            WHEN FLOOR(duration_ms / 10) * 10 = 90 THEN '90-99ms'\n            WHEN FLOOR(duration_ms / 10) * 10 = 100 THEN '100ms'\n            ELSE 'Other' \n        END AS bucket_label\n    FROM logs\n    WHERE duration_ms <= 100\n    GROUP BY duration_bucket\n)\nSELECT \n    bucket_label, \n    -- request_count, \n    request_count * 100.0 / SUM(request_count) OVER () AS request_count\nFROM cte\nORDER BY duration_bucket;\n",
           "refId": "A",
           "sql": {
             "columns": [
@@ -915,7 +957,7 @@
           }
         }
       ],
-      "title": "Response Time (ms) Distribution",
+      "title": "Response (ms) Distribution %",
       "type": "barchart"
     },
     {
@@ -1017,6 +1059,6 @@
   "timezone": "browser",
   "title": "API Logs",
   "uid": "aefpb9ex43n5sc",
-  "version": 8,
+  "version": 9,
   "weekStart": ""
 }
