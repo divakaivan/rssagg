@@ -6,12 +6,14 @@
 
 Tech: Go, PostgreSQL, GitHub Actions, Docker, Kubernetes, Prometheus, Grafana
 
-Table of Contents:
+### Table of Contents:
+
 - [API](#api)
 - [CI/CD](#cicd)
 - [Kubernetes](#kubernetes)
 - [Setup](#setup)
 - [Future](#future)
+
 ## API 
 
 ![api-docs](project-info/api.svg)
