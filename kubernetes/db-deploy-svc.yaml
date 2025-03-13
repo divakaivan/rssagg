@@ -18,11 +18,20 @@ spec:
         - containerPort: 5432
         env:
           - name: POSTGRES_DB
-            value: rssagg
+            valueFrom:
+              secretKeyRef:
+                name: db-secret
+                key: POSTGRES_DB
           - name: POSTGRES_PASSWORD
-            value: postgres
+            valueFrom:
+              secretKeyRef:
+                name: db-secret
+                key: POSTGRES_PASSWORD
           - name: POSTGRES_USER
-            value: postgres
+            valueFrom:
+              secretKeyRef:
+                name: db-secret
+                key: POSTGRES_USER
         resources:
           limits:
             memory: "512Mi"
@@ -33,10 +42,6 @@ spec:
         volumeMounts:
           - mountPath: /var/lib/postgresql/data
             name: db-data
-        securityContext:
-          readOnlyRootFilesystem: true
-          runAsNonRoot: true
-          runAsUser: 1000
       volumes:
         - name: db-data
           persistentVolumeClaim:
