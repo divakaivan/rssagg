@@ -13,21 +13,30 @@ spec:
     spec:
       containers:
       - name: api
-        image: timee98642/rss-agg-api:sha256-5aab953f73f28b77607abbbfe000103d5c4c8154605bcac194be252ed5532ce2
+        image: timee98642/rss-agg-api:main
         ports:
         - containerPort: 8080
           protocol: TCP
-        startupProbe:
-          httpGet:
-            path: /healthz
-            port: 8080
-          failureThreshold: 30
-          periodSeconds: 10
         env:
         - name: PORT
           value: "8080"
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: POSTGRES_DB
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: POSTGRES_PASSWORD
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: POSTGRES_USER
         - name: DB_URL
-          value: postgres://postgres:postgres@db:5432/rssagg?sslmode=disable
+          value: "postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@db:5432/$(POSTGRES_DB)?sslmode=disable"
         resources:
           limits:
             memory: "512Mi"
@@ -35,10 +44,6 @@ spec:
           requests:
             memory: "256Mi"
             cpu: "250m"
-        securityContext:
-          readOnlyRootFilesystem: true
-          runAsNonRoot: true
-          runAsUser: 1000
       restartPolicy: Always
 ---
 apiVersion: v1
