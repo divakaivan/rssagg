@@ -1,11 +1,11 @@
-name: Run Unit Tests
+name: Run Unit Tests & Lint
 
 on:
   push:
     branches: [ "main", "work" ]
 
 jobs:
-  test:
+  test_and_lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,3 +17,9 @@ jobs:
 
       - name: Test
         run: go test ./tests -test.v
+
+      - name: Lint Kubernetes YAML
+        uses: stackrox/kube-linter-action@v1.0.6
+        with:
+          directory: kubernetes
+          config: kubernetes/linter-config.yaml
