@@ -291,7 +291,8 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "fixedColor": "text",
+            "mode": "fixed"
           },
           "mappings": [],
           "thresholds": {
@@ -311,7 +312,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 3,
+        "h": 6,
         "w": 4,
         "x": 20,
         "y": 0
@@ -374,87 +375,6 @@
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 20,
-        "y": 3
-      },
-      "id": 9,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "p95"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "11.5.2",
-      "targets": [
-        {
-          "editorMode": "code",
-          "format": "table",
-          "rawQuery": true,
-          "rawSql": "SELECT round(PERCENTILE_CONT(0.95) \n    WITHIN GROUP (ORDER BY duration_ms)::bigint, 4) AS p95\nFROM logs;\n",
-          "refId": "A",
-          "sql": {
-            "columns": [
-              {
-                "parameters": [],
-                "type": "function"
-              }
-            ],
-            "groupBy": [
-              {
-                "property": {
-                  "type": "string"
-                },
-                "type": "groupBy"
-              }
-            ],
-            "limit": 50
-          }
-        }
-      ],
-      "title": "95th Percentile Duration (ms)",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "grafana-postgresql-datasource",
-        "uid": "befp4e3pxuscge"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
           "custom": {
             "align": "auto",
             "cellOptions": {
@@ -504,7 +424,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT \n    url, \n    AVG(duration_ms) AS avg_duration_ms,\n    COUNT(*) AS request_count\nFROM logs\nWHERE url not like '/swagger%' and url not like '/favicon%'\nGROUP BY url\nORDER BY avg_duration_ms DESC",
+          "rawSql": "SELECT \n    url, \n    AVG(duration_ms) AS avg_duration_ms,\n    COUNT(*) AS request_count,\n    PERCENTILE_CONT(0.95) WITHIN GROUP (ORDER BY duration_ms) AS pct_95_duration_ms\nFROM logs\nWHERE url NOT LIKE '/swagger%' AND url NOT LIKE '/favicon%'\nGROUP BY url\nORDER BY avg_duration_ms DESC;\n",
           "refId": "A",
           "sql": {
             "columns": [
@@ -1059,6 +979,6 @@
   "timezone": "browser",
   "title": "API Logs",
   "uid": "aefpb9ex43n5sc",
-  "version": 9,
+  "version": 11,
   "weekStart": ""
 }
