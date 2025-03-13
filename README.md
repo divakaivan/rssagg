@@ -11,7 +11,7 @@
 - [API](#api)
 - [CI/CD](#cicd)
 - [Kubernetes](#kubernetes)
-- [Monitoring & Metrics](#monitoring-and-metrics)
+- [Monitoring & Metrics](#monitoring--metrics)
 - [Setup](#setup)
 - [Future](#future)
 
