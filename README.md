@@ -68,7 +68,7 @@ The dockerised API is lint, tested, and pushed to [Docker Hub](https://hub.docke
 **Secrets**
 - Database connection information is passed to both `api pod` and `db pod`
 
-### Monitoring & Metrics
+## Monitoring & Metrics
 
 - I setup Prometheus (with Helm) for K8s cluster monitoring and metrics. The information is sent to Grafana (setup with Helm) to create dashboards. Here are dashboards pics from the `api pod` and `db pod`
 
