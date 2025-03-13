@@ -12,7 +12,6 @@ import (
 	"github.com/divakaivan/rssagg/internal/rss"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/cors"
-	"github.com/joho/godotenv"
 	httpSwagger "github.com/swaggo/http-swagger/v2"
 
 	_ "github.com/divakaivan/rssagg/docs"
@@ -33,10 +32,10 @@ import (
 // @BasePath	:8080/v1
 func main() {
 
-	env_err := godotenv.Load(".env")
-	if env_err != nil {
-		log.Fatal("[Error] Cannot load .env file: ", env_err)
-	}
+	// env_err := godotenv.Load(".env")
+	// if env_err != nil {
+	// 	log.Fatal("[Error] Cannot load .env file: ", env_err)
+	// }
 
 	portString := os.Getenv("PORT")
 	if portString == "" {

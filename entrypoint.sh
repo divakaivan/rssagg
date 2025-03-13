@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-echo "Waiting for the database to start..."
-sleep 10
+echo "Waiting for the database to start... (sleep 30)"
+sleep 30
 
 echo "Running database migrations..."
 /bin/goose -dir=sqlc/schema postgres "postgres://postgres:postgres@db:5432/rssagg?sslmode=disable" up
