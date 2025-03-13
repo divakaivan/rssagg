@@ -15,7 +15,7 @@ jobs:
         with:
           go-version: '1.24'
 
-      - name: Test
+      - name: Run Tests
         run: go test ./tests -test.v
 
       - name: Lint Kubernetes YAML
