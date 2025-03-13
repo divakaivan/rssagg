@@ -4,3 +4,4 @@ rssagg
 thunder-tests/
 vendor/*
 modules.txt
+*.drawio
