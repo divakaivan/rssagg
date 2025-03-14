@@ -1,0 +1,7 @@
+.github/
+docs/
+grafana/
+kubernetes/
+project-info/
+README.md
+docker-compose.yaml
