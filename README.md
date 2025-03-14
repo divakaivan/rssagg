@@ -14,6 +14,7 @@
 - [Monitoring & Metrics](#monitoring--metrics)
 - [Setup](#setup)
 - [Future](#future)
+- [Directories Structure](#directories-structure)
 
 ## API 
 
@@ -50,6 +51,8 @@
 The dockerised API is lint, tested, and pushed to [Docker Hub](https://hub.docker.com/repository/docker/timee98642/rss-agg-api/general) using GitHub Actions.
 
 ## Kubernetes
+
+This is my local cluster setup.
 
 ![k8s-flow](project-info/k8s-flow.svg)
 
@@ -133,3 +136,90 @@ You should see something like if everything is ok:
 - try using an ingress controller for exposing the API with K8s
 - learn more about Go and implement things like the repository pattern for the API
 - add caching to the API
+
+### Directories Structure
+
+```
+└── 📁rssagg
+    └── 📁.github
+        └── 📁workflows
+            └── push_img_to_hub.yaml
+            └── run_tests.yaml
+    └── 📁docs # Go swagger generated API documentation
+    └── 📁grafana # Grafana dashboards
+        └── api-logs-dashboard.json
+        └── k8s-pods-dashboard.json
+    └── 📁internal # Go API internals
+        └── 📁auth
+            └── auth.go
+        └── 📁database
+            └── db.go
+            └── feed_follows.sql.go
+            └── feeds.sql.go
+            └── logs.sql.go
+            └── migration.go
+            └── models.go
+            └── posts.sql.go
+            └── users.sql.go
+        └── 📁handlers
+            └── api.go
+            └── err.go
+            └── feed_follows.go
+            └── feed.go
+            └── middleware_auth.go
+            └── middleware_log.go
+            └── readiness.go
+            └── user.go
+        └── 📁mockdb
+            └── db.go
+        └── 📁rss
+            └── rss.go
+            └── scraper.go
+        └── 📁utils
+            └── json.go
+            └── models.go
+    └── 📁kubernetes # K8s configs
+        └── api-deploy-svc.yaml
+        └── db-deploy-svc.yaml
+        └── db-pv.yaml
+        └── db-pvc.yaml
+        └── db-secret.yaml
+        └── linter-config.yaml
+        └── network-policy.yaml
+    └── 📁project-info
+    └── 📁sqlc # Database migrations
+        └── 📁queries
+            └── feed_follows.sql
+            └── feeds.sql
+            └── logs.sql
+            └── posts.sql
+            └── users.sql
+        └── 📁schema
+            └── 001_users.sql
+            └── 002_users_apikey.sql
+            └── 003_feeds.sql
+            └── 004_feed_follows.sql
+            └── 005_feeds_lastfetchedat.sql
+            └── 006_posts.sql
+            └── 007_logging.sql
+            └── 008_default_user.sql
+    └── 📁tests
+        └── api_test.go
+        └── auth_test.go
+        └── containers.go
+        └── err_test.go
+        └── feeds_test.go
+        └── main_test.go
+        └── posts_test.go
+        └── users_test.go
+    └── .gitignore
+    └── .pre-commit-config.yaml
+    └── docker-compose.yaml
+    └── Dockerfile
+    └── entrypoint.sh
+    └── go.mod
+    └── go.sum
+    └── main.go
+    └── README.md
+    └── sqlc.yaml
+```
