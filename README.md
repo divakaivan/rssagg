@@ -6,7 +6,7 @@
 
 *Tech: Go, PostgreSQL, GitHub Actions, Docker, Kubernetes, Prometheus, Grafana*
 
-### Table of Contents:
+### Table of Contents
 
 - [API](#api)
 - [CI/CD](#cicd)
@@ -132,9 +132,9 @@ You should see something like if everything is ok:
 
 ### Future
 
-- send API logs to a dedicated database and/or create a main/copy database pod for writes only to the main, and the copy reads them and is used for dashboards
+- send API logs to a dedicated database and/or create a main/copy database pod for writes only to the main, and the copy reads them and is used for dashboards (maybe try [running replicated stateful apps](https://kubernetes.io/docs/tasks/run-application/run-replicated-stateful-application/))
 - try using an ingress controller for exposing the API with K8s
-- learn more about Go and implement things like the repository pattern for the API
+- this is my 1st time using Go (thanks [Lane Wagner](https://www.boot.dev/teachers/lane-wagner) for the awesome intro to Go), so learning more about the language's capabilities and improving the API
 - add caching to the API
 
 ### Directories Structure
