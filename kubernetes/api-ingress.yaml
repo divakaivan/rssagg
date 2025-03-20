@@ -1,18 +1,18 @@
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: api-service-ingress
-#   labels:
-#     name: api-service-ingress
-# spec:
-#   rules:
-#   - host: rss-agg-api.com
-#     http:
-#       paths:
-#       - pathType: Prefix
-#         path: "/"
-#         backend:
-#           service:
-#             name: api-service
-#             port: 
-#               number: 80
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-service-ingress
+  labels:
+    name: api-service-ingress
+spec:
+  rules:
+  - host: rss-agg-api.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: api-service
+            port: 
+              number: 80

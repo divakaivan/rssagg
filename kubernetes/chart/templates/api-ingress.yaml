@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "chart.fullname" . }}-api-service-ingress
+  labels:
+    name: api-service-ingress
+  {{- include "chart.labels" . | nindent 4 }}
+spec:
+  rules:
+  - host: rss-agg-api.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: '{{ include "chart.fullname" . }}-api-service'
+            port:
+              number: 80
+        path: /
+        pathType: Prefix

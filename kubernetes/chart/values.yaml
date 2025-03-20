@@ -1,0 +1,45 @@
+api:
+  api:
+    env:
+      dbUrl: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@db:5432/$(POSTGRES_DB)?sslmode=disable
+      port: "8080"
+    image:
+      repository: timee98642/rss-agg-api
+      tag: main
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+apiService:
+  ports:
+  - port: 80
+    targetPort: 8080
+  type: LoadBalancer
+db:
+  db:
+    image:
+      repository: postgres
+      tag: "15"
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+dbSecret:
+  postgresDb: "cnNzYWdn"
+  postgresPassword: "cG9zdGdyZXM="
+  postgresUser: "cG9zdGdyZXM="
+dbService:
+  ports:
+  - port: 5432
+    targetPort: 5432
+  type: ClusterIP
+kubernetesClusterDomain: cluster.local
+pvc:
+  dbData:
+    storageRequest: 1Gi
